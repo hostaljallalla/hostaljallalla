@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Hostal</title>
+</head>
+<body>
+    <h1>Formulario de Reserva</h1>
+    <form id="reservationForm">
+        <label for="roomId">ID de Habitación:</label><br>
+        <input type="number" id="roomId" name="roomId" required><br><br>
+        
+        <label for="roomName">Nombre de Habitación:</label><br>
+        <input type="text" id="roomName" name="roomName" required><br><br>
+        
+        <label for="arrivalDate">Fecha de Llegada:</label><br>
+        <input type="date" id="arrivalDate" name="arrivalDate" required><br><br>
+        
+        <label for="departureDate">Fecha de Salida:</label><br>
+        <input type="date" id="departureDate" name="departureDate" required><br><br>
+        
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="phone">Teléfono:</label><br>
+        <input type="text" id="phone" name="phone" required><br><br>
+        
+        <label for="address">Dirección:</label><br>
+        <input type="text" id="address" name="address" required><br><br>
+        
+        <label for="nationality">Nacionalidad:</label><br>
+        <input type="text" id="nationality" name="nationality" required><br><br>
+        
+        <button type="submit">Reservar</button>
+    </form>
+
+    <script>
+        document.getElementById('reservationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = {
+                roomId: document.getElementById('roomId').value,
+                roomName: document.getElementById('roomName').value,
+                arrivalDate: document.getElementById('arrivalDate').value,
+                departureDate: document.getElementById('departureDate').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                nationality: document.getElementById('nationality').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/reservations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Reserva realizada con éxito.');
+                } else {
+                    alert('Error al realizar la reserva.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al conectarse al servidor.');
+            }
+        });
+    </script>
+</body>
+</html>
